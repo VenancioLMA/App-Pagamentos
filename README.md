@@ -1,36 +1,43 @@
 # App-Pagamentos
 
-Aplicativo para um professor de educação física acompanhar alunos, planos e
-mensalidades, inspirado no fluxo de gestão do MFIT Personal. O escopo inicial
-é financeiro: não inclui loja, carrinho, estoque, treinos nem integração para
-processar pagamentos.
+Um projeto simples para um professor de educação física manter o cadastro dos
+alunos e seu próprio perfil. É um começo didático: ainda não processa
+pagamentos nem precisa de bibliotecas extras.
 
-## Estrutura
+## Como abrir no Windows
 
-```text
-src/app_pagamentos/
-  alunos/          cadastro e consulta de alunos
-  professores/     perfil do professor responsável
-  planos/          planos e valores mensais
-  financeiro/      cobranças, pagamentos e situação financeira
-  comum/           repositório em memória para desenvolvimento
-```
+1. Instale Python 3.10 ou superior em [python.org](https://www.python.org/downloads/).
+   Durante a instalação, marque **Add Python to PATH**.
+2. Extraia o ZIP do projeto para uma pasta.
+3. Abra essa pasta e dê dois cliques em `executar_alunos.bat` ou
+   `executar_professores.bat`.
 
-As cobranças podem ser geradas a partir do valor de um plano, consultadas por
-aluno e marcadas como pagas após o recebimento. A confirmação registra o meio
-de pagamento informado; ela não movimenta dinheiro nem chama um provedor
-externo.
+Cada atalho abre um menu próprio no terminal. O de alunos permite cadastrar,
+listar e ativar/inativar cadastros. O de professores permite ver, cadastrar e
+atualizar o perfil.
 
-Os repositórios são temporários e mantêm os dados somente na memória do
-processo. Persistência em banco de dados, autenticação, interface e integração
-com Pix/cartão ficam para etapas posteriores.
+Os atalhos procuram Python automaticamente, inclusive em alguns locais comuns
+de instalação no Windows. Se aparecer uma mensagem dizendo que Python não foi
+encontrado, instale-o pelo endereço acima e abra o atalho novamente.
 
-## Instalação local
+## Rodar pelo terminal
 
-Requer Python 3.10 ou superior:
+Se preferir usar o PowerShell, abra a pasta do projeto e execute:
 
 ```bash
-python -m pip install -e .
+.\executar_alunos.bat
 ```
 
-Os pacotes usam namespace packages e não precisam de arquivos `__init__.py`.
+Para abrir o perfil do professor, use `.\executar_professores.bat`.
+
+## Onde ficam os dados
+
+Os cadastros são guardados em arquivos JSON na pasta `data`, criada na primeira
+vez que salvar algo. Assim, eles continuam lá ao fechar e abrir o programa.
+Esses arquivos ficam só neste computador; faça cópias de segurança e não
+compartilhe dados pessoais dos alunos.
+
+O código está em `src/app_pagamentos/`: `alunos/` cuida dos cadastros de alunos,
+`professores/` do perfil do professor, `planos/` dos planos e `financeiro/` das
+cobranças. Para manter os exemplos iniciais fáceis de entender, os atalhos
+abrem apenas os menus de alunos ou professores.
