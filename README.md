@@ -1,8 +1,12 @@
 # App-Pagamentos
 
-Um projeto simples para um professor de educação física manter o cadastro dos
-alunos e seu próprio perfil. É um começo didático: ainda não processa
-pagamentos nem precisa de bibliotecas extras.
+Aplicativo para um professor de educação física acompanhar alunos, planos e
+mensalidades, inspirado no fluxo de gestão do MFIT Personal. O escopo inicial
+é financeiro: não inclui loja, carrinho, estoque, treinos nem integração para
+processar pagamentos.
+
+Esta versão é um começo didático, sem bibliotecas extras. No momento, os
+atalhos permitem manter o cadastro dos alunos e o perfil do professor.
 
 ## Como abrir no Windows
 
@@ -28,7 +32,7 @@ Se preferir usar o PowerShell, abra a pasta do projeto e execute:
 .\executar_alunos.bat
 ```
 
-Para abrir o perfil do professor, use `.\executar_professores.bat`.
+Para abrir o perfil do professor, use ` .\executar_professores.bat`.
 
 ## Onde ficam os dados
 
