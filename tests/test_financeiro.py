@@ -1,3 +1,5 @@
+"""Testes das regras de criação e atualização de cobranças."""
+
 import unittest
 from datetime import date
 from decimal import Decimal
@@ -14,7 +16,10 @@ from app_pagamentos.professores.professor import Professor
 
 
 class ServicoFinanceiroTests(unittest.TestCase):
+    """Prepara cadastros de exemplo para testar o serviço financeiro."""
+
     def setUp(self) -> None:
+        """Cria dados independentes antes de cada teste."""
         self.alunos = RepositorioAlunos()
         self.planos = RepositorioPlanos()
         self.cobrancas = RepositorioCobrancas()
@@ -28,6 +33,7 @@ class ServicoFinanceiroTests(unittest.TestCase):
         )
 
     def test_gera_cobranca_com_valor_do_plano_e_registra_pagamento(self) -> None:
+        """Usa o preço do plano e permite registrar um pagamento válido."""
         cobranca = self.servico.gerar_cobranca(
             self.aluno.id,
             self.plano.id,
@@ -45,6 +51,7 @@ class ServicoFinanceiroTests(unittest.TestCase):
         self.assertIsNotNone(paga.paga_em)
 
     def test_nao_gera_cobranca_para_aluno_inativo(self) -> None:
+        """Impede a criação de novas cobranças para um aluno inativo."""
         self.aluno.ativo = False
 
         with self.assertRaises(LookupError):
@@ -56,6 +63,7 @@ class ServicoFinanceiroTests(unittest.TestCase):
             )
 
     def test_nao_permite_confirmar_pagamento_mais_de_uma_vez(self) -> None:
+        """Uma cobrança já paga não pode ser paga novamente."""
         cobranca = self.servico.gerar_cobranca(
             self.aluno.id,
             self.plano.id,
@@ -69,4 +77,5 @@ class ServicoFinanceiroTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    # Permite executar estes testes diretamente com Python.
     unittest.main()

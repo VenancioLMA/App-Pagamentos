@@ -1,9 +1,12 @@
+"""Funções compartilhadas para ler e gravar listas de registros em JSON."""
+
 import json
 from pathlib import Path
 from typing import Any
 
 
 def ler_lista_json(caminho: Path) -> list[dict[str, Any]]:
+    """Lê uma lista de cadastros; um arquivo ainda inexistente conta como vazio."""
     if not caminho.exists():
         return []
 
@@ -18,7 +21,9 @@ def ler_lista_json(caminho: Path) -> list[dict[str, Any]]:
 
 
 def gravar_lista_json(caminho: Path, dados: list[dict[str, Any]]) -> None:
+    """Cria a pasta necessária e grava os registros em formato JSON legível."""
     try:
+        # parents=True também cria pastas intermediárias, se ainda não existirem.
         caminho.parent.mkdir(parents=True, exist_ok=True)
         caminho.write_text(
             json.dumps(dados, ensure_ascii=False, indent=2),

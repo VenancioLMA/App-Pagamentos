@@ -1,3 +1,5 @@
+"""Testes que verificam menus e persistência dos cadastros em arquivos."""
+
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,7 +10,10 @@ from app_pagamentos.professores import cli as professores_cli
 
 
 class CliTests(unittest.TestCase):
+    """Confere os principais fluxos disponíveis nos menus de texto."""
+
     def test_cadastro_de_aluno_fica_salvo_apos_reabrir(self) -> None:
+        """Um aluno gravado deve continuar disponível após carregar o arquivo."""
         with tempfile.TemporaryDirectory() as pasta:
             arquivo = Path(pasta) / "alunos.json"
             with patch.object(alunos_cli, "ARQUIVO_ALUNOS", arquivo):
@@ -22,6 +27,7 @@ class CliTests(unittest.TestCase):
             self.assertEqual(recarregado.listar()[0].nome, "Joana Lima")
 
     def test_perfil_de_professor_fica_salvo_apos_reabrir(self) -> None:
+        """O perfil e seu identificador devem ser preservados ao salvar e reler."""
         with tempfile.TemporaryDirectory() as pasta:
             arquivo = Path(pasta) / "professor.json"
             with patch.object(professores_cli, "ARQUIVO_PROFESSOR", arquivo):
@@ -38,6 +44,7 @@ class CliTests(unittest.TestCase):
             self.assertEqual(recarregado.nome, "Carlos Souza")
 
     def test_indice_zero_nao_altera_o_ultimo_aluno(self) -> None:
+        """A opção zero não deve ser interpretada como o último aluno da lista."""
         with tempfile.TemporaryDirectory() as pasta:
             arquivo = Path(pasta) / "alunos.json"
             with patch.object(alunos_cli, "ARQUIVO_ALUNOS", arquivo):
@@ -55,4 +62,5 @@ class CliTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    # Permite executar estes testes diretamente com Python.
     unittest.main()

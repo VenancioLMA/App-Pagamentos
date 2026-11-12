@@ -1,3 +1,5 @@
+"""Apresenta o menu de alunos e salva os cadastros em um arquivo JSON."""
+
 from pathlib import Path
 from uuid import UUID
 
@@ -9,9 +11,11 @@ ARQUIVO_ALUNOS = Path(__file__).resolve().parents[3] / "data" / "alunos.json"
 
 
 def carregar_alunos() -> RepositorioAlunos:
+    """Lê os alunos do arquivo e os coloca no repositório usado pelo programa."""
     repositorio = RepositorioAlunos()
     for registro in ler_lista_json(ARQUIVO_ALUNOS):
         try:
+            # Cada dicionário lido do arquivo é convertido novamente em um Aluno.
             aluno = Aluno(
                 id=UUID(registro["id"]),
                 nome=registro["nome"],
@@ -26,6 +30,7 @@ def carregar_alunos() -> RepositorioAlunos:
 
 
 def salvar_alunos(repositorio: RepositorioAlunos) -> None:
+    """Converte os alunos em dados simples e grava todos no arquivo."""
     registros = [
         {
             "id": str(aluno.id),
@@ -40,6 +45,7 @@ def salvar_alunos(repositorio: RepositorioAlunos) -> None:
 
 
 def listar_alunos(repositorio: RepositorioAlunos) -> None:
+    """Mostra os alunos cadastrados; se não houver nenhum, informa o usuário."""
     alunos = repositorio.listar()
     if not alunos:
         print("\nAinda não há alunos cadastrados.")
@@ -47,12 +53,14 @@ def listar_alunos(repositorio: RepositorioAlunos) -> None:
 
     print("\n--- Alunos cadastrados ---")
     for indice, aluno in enumerate(alunos, start=1):
+        # Exibe valores compreensíveis mesmo quando o telefone não foi preenchido.
         situacao = "Ativo" if aluno.ativo else "Inativo"
         telefone = aluno.telefone or "não informado"
         print(f"{indice}. {aluno.nome} | {aluno.email} | {telefone} | {situacao}")
 
 
 def cadastrar_aluno(repositorio: RepositorioAlunos) -> None:
+    """Pede os dados do aluno, valida duplicidade e salva o novo cadastro."""
     nome = input("Nome do aluno: ").strip()
     email = input("E-mail do aluno: ").strip()
     telefone = input("Telefone (opcional): ").strip()
@@ -73,6 +81,7 @@ def cadastrar_aluno(repositorio: RepositorioAlunos) -> None:
 
 
 def alterar_situacao(repositorio: RepositorioAlunos) -> None:
+    """Alterna entre aluno ativo e inativo após escolher seu número na lista."""
     listar_alunos(repositorio)
     alunos = repositorio.listar()
     if not alunos:
@@ -96,6 +105,7 @@ def alterar_situacao(repositorio: RepositorioAlunos) -> None:
 
 
 def executar() -> None:
+    """Inicia o menu e continua atendendo opções até a pessoa escolher sair."""
     try:
         repositorio = carregar_alunos()
         while True:
@@ -108,6 +118,7 @@ def executar() -> None:
             )
             opcao = input("Escolha uma opção: ").strip()
 
+            # Cada opção encaminha o trabalho para uma função separada.
             if opcao == "1":
                 listar_alunos(repositorio)
             elif opcao == "2":
@@ -125,4 +136,5 @@ def executar() -> None:
 
 
 if __name__ == "__main__":
+    # Esta condição permite importar o módulo sem abrir o menu automaticamente.
     executar()

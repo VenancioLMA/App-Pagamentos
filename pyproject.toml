@@ -1,13 +1,16 @@
+# Instruções para a ferramenta que empacota e instala este projeto Python.
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
+# Nome, versão e requisitos básicos do aplicativo.
 [project]
 name = "app-pagamentos"
 version = "0.1.0"
 description = "Gestão de alunos e mensalidades para professor de educação física"
 requires-python = ">=3.10"
 
+# Localiza os módulos do aplicativo dentro da pasta src.
 [tool.setuptools.packages.find]
 where = ["src"]
 namespaces = true
